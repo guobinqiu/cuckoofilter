@@ -25,7 +25,9 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
+	//settings
 	dumpPath := "dump"
+	dumpInterval := 15 * time.Minute
 
 	s := grpc.NewServer()
 	srv := server.NewServer()
@@ -36,13 +38,12 @@ func main() {
 	quitTicker := make(chan struct{})
 
 	go func() {
-		ticker := time.NewTicker(5 * time.Second)
-		//ticker := time.NewTicker(15 * time.Minute)
+		ticker := time.NewTicker(dumpInterval)
 		isRunning := false
 		for {
 			select {
 			case <-ticker.C:
-				fmt.Println(isRunning)
+				//log.Println("isRunning", isRunning)
 				if !isRunning {
 					go func() {
 						log.Println("dumping...")
@@ -50,7 +51,6 @@ func main() {
 						if err := srv.Dump(dumpPath); err != nil {
 							log.Printf("failed to dump: %v", err)
 						}
-						//time.Sleep(10 * time.Second)
 						isRunning = false
 						log.Println("dumped.")
 					}()
