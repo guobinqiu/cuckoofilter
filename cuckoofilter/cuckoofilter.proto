@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+option go_package = "cuckoofilter/cuckoofilter";
+
+package cuckoofilter;
+
+import "google/protobuf/empty.proto";
+
+service CuckooFilter {
+    rpc CreateFilter (CreateFilterRequest) returns (CreateFilterResponse) {}
+    rpc DeleteFilter (DeleteFilterRequest) returns (DeleteFilterResponse) {}
+    rpc ListFilters (google.protobuf.Empty) returns (ListFiltersResponse) {}
+    rpc InsertElement (InsertElementRequest) returns (InsertElementResponse) {}
+    rpc InsertElements (InsertElementsRequest) returns (InsertElementsResponse) {}
+    rpc DeleteElement (DeleteElementRequest) returns (DeleteElementResponse) {}
+    rpc CountElements (CountElementsRequest) returns (CountElementsResponse) {}
+    rpc ResetFilter (ResetFilterRequest) returns (ResetFilterResponse) {}
+    rpc LookupElement (LookupElementRequest) returns (LookupElementResponse) {}
+    rpc LookupElements (LookupElementsRequest) returns (LookupElementsResponse) {}
+    rpc LookupElementsStream (stream LookupElementsStreamRequest) returns (stream LookupElementsStreamResponse) {}
+}
+
+message Status {
+    int32 code = 1;
+    string msg = 2;
+}
+
+message CreateFilterRequest {
+    string filter_name = 1;
+    uint64 capacity = 2;
+}
+
+message CreateFilterResponse {
+    Status status = 1;
+}
+
+message DeleteFilterRequest {
+    string filter_name = 1;
+}
+
+message DeleteFilterResponse {
+    Status status = 1;
+}
+
+message ListFiltersResponse {
+    Status status = 1;
+    repeated string filters = 2;
+}
+
+message InsertElementRequest {
+    string filter_name = 1;
+    string element = 2;
+}
+
+message InsertElementResponse {
+    Status status = 1;
+}
+
+message InsertElementsRequest {
+    string filter_name = 1;
+    repeated string elements = 2;
+}
+
+message InsertElementsResponse {
+    Status status = 1;
+    repeated string failed_elements = 2;
+}
+
+message DeleteElementRequest {
+    string filter_name = 1;
+    string element = 2;
+}
+
+message DeleteElementResponse {
+    Status status = 1;
+}
+
+message CountElementsRequest {
+    string filter_name = 1;
+}
+
+message CountElementsResponse {
+    Status status = 1;
+    uint64 len = 2;
+}
+
+message ResetFilterRequest {
+    string filter_name = 1;
+}
+
+message ResetFilterResponse {
+    Status status = 1;
+}
+
+message LookupElementRequest {
+    string filter_name = 1;
+    string element = 2;
+}
+
+message LookupElementResponse {
+    Status status = 1;
+}
+
+message LookupElementsRequest {
+    string filter_name = 1;
+    repeated string elements = 2;
+}
+
+message LookupElementsResponse {
+    Status status = 1;
+    repeated string elements = 2;
+}
+
+message LookupElementsStreamRequest {
+    string filter_name = 1;
+    string element = 2;
+}
+
+message LookupElementsStreamResponse {
+    string element = 2;
+}
