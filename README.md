@@ -21,7 +21,7 @@ go test github.com/guobinqiu/cuckoofilter/server
 ### Run Benchmark Test
 
 ```
-go test -bench=. github.com/guobinqiu/cuckoofilter/cuckoofilter/server  -benchmem
+go test -bench=. github.com/guobinqiu/cuckoofilter/server  -benchmem
 ```
 
 ### API
