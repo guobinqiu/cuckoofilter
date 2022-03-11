@@ -15,13 +15,13 @@ go run client/go/main.go
 ### Run Unit Test
 
 ```
-go test cuckoofilter/server
+go test github.com/guobinqiu/cuckoofilter/server
 ```
 
 ### Run Benchmark Test
 
 ```
-go test -bench=. cuckoofilter/server  -benchmem
+go test -bench=. github.com/guobinqiu/cuckoofilter/cuckoofilter/server  -benchmem
 ```
 
 ### API
