@@ -3,60 +3,60 @@
 ### Run Server 
 
 ```
-go run main.go
-```
-
-### Run Client
-
-```
-go run client/go/main.go
+go run cuckoofilter_server/main.go
 ```
 
 ### Run Unit Test
 
 ```
-go test github.com/guobinqiu/cuckoofilter/server
+go test -v github.com/guobinqiu/cuckoofilter/server
 ```
 
 ### Run Benchmark Test
 
 ```
-go test -bench=. github.com/guobinqiu/cuckoofilter/server  -benchmem
+go test -bench=. github.com/guobinqiu/cuckoofilter/server -benchmem
 ```
 
 ### API
 
 ```
-#创建一个过滤器
+#Create a filter
 rpc CreateFilter (CreateFilterRequest) returns (CreateFilterResponse) {}
 
-#删除一个过滤器
+#Delete a filter
 rpc DeleteFilter (DeleteFilterRequest) returns (DeleteFilterResponse) {}
 
-#显示所有过滤器
+#Show all filters
 rpc ListFilters (google.protobuf.Empty) returns (ListFiltersResponse) {}
 
-#插入一个元素到指定过滤器
+#Insert an element to the specified filter
 rpc InsertElement (InsertElementRequest) returns (InsertElementResponse) {}
 
-#插入一批元素到指定过滤器
+#Insert a set of elements to the specified filter
 rpc InsertElements (InsertElementsRequest) returns (InsertElementsResponse) {}
 
-#删除一个指定过滤器内的元素
+#Delete an element within a specified filter
 rpc DeleteElement (DeleteElementRequest) returns (DeleteElementResponse) {}
 
-#返回指定过滤器元素个数
+#Get the number of elements in the specified filter
 rpc CountElements (CountElementsRequest) returns (CountElementsResponse) {}
 
-#删除指定过滤器内所有元素
+#Delete all elements in the specified filter
 rpc ResetFilter (ResetFilterRequest) returns (ResetFilterResponse) {}
 
-#查找某一个元素是否存在于指定的过滤器内
+#Find if an element exists in the specified filter
 rpc LookupElement (LookupElementRequest) returns (LookupElementResponse) {}
 
-#查找该批次的元素是否存在于指定的过滤器内
+#Find if this set of elements exists in the specified filter
 rpc LookupElements (LookupElementsRequest) returns (LookupElementsResponse) {}
 
-#流式查找元素是否存在于指定的过滤器内
+#Way streaming to find if elements exists in the specified filter
 rpc LookupElementsStream (stream LookupElementsStreamRequest) returns (stream LookupElementsStreamResponse) {}
 ```
+
+### Client Examples
+
+- [go](./cuckoofilter_client/main.go)
+
+- [java](https://github.com/guobinqiu/cuckoofilter-java-client)

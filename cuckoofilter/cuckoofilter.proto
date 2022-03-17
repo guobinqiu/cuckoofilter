@@ -1,6 +1,8 @@
 syntax = "proto3";
 
-option go_package = "cuckoofilter/cuckoofilter";
+option go_package = "github.com/guobinqiu/cuckoofilter/cuckoofilter";
+option java_package = "cuckoofilter";
+option java_multiple_files = true;
 
 package cuckoofilter;
 
