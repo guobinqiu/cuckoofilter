@@ -56,7 +56,7 @@ rpc ResetFilter (ResetFilterRequest) returns (ResetFilterResponse) {}
 #Find if an element exists in the specified filter
 rpc LookupElement (LookupElementRequest) returns (LookupElementResponse) {}
 
-#Find if this set of elements exists in the specified filter
+#Get both matched and unmatched elements in the specified filter
 rpc LookupElements (LookupElementsRequest) returns (LookupElementsResponse) {}
 
 #Way streaming to find if elements exists in the specified filter
