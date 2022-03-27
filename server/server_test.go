@@ -275,9 +275,11 @@ func TestLookupElements(t *testing.T) {
 	filter.Insert([]byte("jack"))
 
 	var res *pb.LookupElementsResponse
-	res, _ = s.LookupElements(ctx, &pb.LookupElementsRequest{FilterName: "aaa", Elements: []string{"jack"}})
+	res, _ = s.LookupElements(ctx, &pb.LookupElementsRequest{FilterName: "aaa", Elements: []string{"jack", "rose"}})
 
 	assert.Equal(t, res.Status, StatusOK)
+	assert.Equal(t, res.MatchedElements, []string{"jack"})
+	assert.Equal(t, res.UnmatchedElements, []string{"rose"})
 }
 
 func TestLookupElementsNoFilterFound(t *testing.T) {
