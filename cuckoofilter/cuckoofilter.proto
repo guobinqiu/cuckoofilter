@@ -110,7 +110,8 @@ message LookupElementsRequest {
 
 message LookupElementsResponse {
     Status status = 1;
-    repeated string elements = 2;
+    repeated string matched_elements = 2;
+    repeated string unmatched_elements = 3;
 }
 
 message LookupElementsStreamRequest {

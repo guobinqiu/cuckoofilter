@@ -143,15 +143,18 @@ func (s *cuckooFilterServer) LookupElements(ctx context.Context, req *pb.LookupE
 		return &pb.LookupElementsResponse{Status: StatusOverLimitation}, nil
 	}
 	var matchedElements = make([]string, 0, maxElementCount)
+	var unmatchedElements = make([]string, 0, maxElementCount)
 	for _, element := range req.Elements {
 		if filter.Lookup([]byte(element)) {
 			matchedElements = append(matchedElements, element)
+		} else {
+			unmatchedElements = append(unmatchedElements, element)
 		}
 	}
 	if len(matchedElements) == 0 {
 		return &pb.LookupElementsResponse{Status: StatusNoElementFound}, nil
 	}
-	return &pb.LookupElementsResponse{Status: StatusOK, Elements: matchedElements}, nil
+	return &pb.LookupElementsResponse{Status: StatusOK, MatchedElements: matchedElements, UnmatchedElements: unmatchedElements}, nil
 }
 
 func (s *cuckooFilterServer) LookupElementsStream(stream pb.CuckooFilter_LookupElementsStreamServer) error {

@@ -99,84 +99,77 @@ func lookupElementsStream(c pb.CuckooFilterClient, ctx context.Context, filterNa
 	<-waitc
 }
 
-func lookupElements(c pb.CuckooFilterClient, ctx context.Context, filterName string, elements []string) ([]string, error) {
+func lookupElements(c pb.CuckooFilterClient, ctx context.Context, filterName string, elements []string) {
 	var res *pb.LookupElementsResponse
 	res, err := c.LookupElements(ctx, &pb.LookupElementsRequest{FilterName: filterName, Elements: elements})
 	if err != nil {
-		return nil, err
+		log.Fatal(err)
 	}
-	log.Println("相交元素：", res.Elements)
-	return res.Elements, nil
+	log.Println("存在的元素：", res.MatchedElements)   //会误判，判断为存在的，可能不存在
+	log.Println("不存在的元素", res.UnmatchedElements) //可靠的，判断为不存在的，一定不存在
 }
 
-func deleteFilter(c pb.CuckooFilterClient, ctx context.Context, filterName string) error {
+func deleteFilter(c pb.CuckooFilterClient, ctx context.Context, filterName string) {
 	var res *pb.DeleteFilterResponse
 	res, err := c.DeleteFilter(ctx, &pb.DeleteFilterRequest{FilterName: filterName})
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	log.Println("删除filter：", res.Status.Msg)
-	return nil
 }
 
-func listFilters(c pb.CuckooFilterClient, ctx context.Context) error {
+func listFilters(c pb.CuckooFilterClient, ctx context.Context) {
 	var res *pb.ListFiltersResponse
 	res, err := c.ListFilters(ctx, new(empty.Empty))
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	log.Println("显示所有filter：", res.Filters)
-	return nil
 }
 
-func insertElements(c pb.CuckooFilterClient, ctx context.Context, filterName string, elements []string) ([]string, error) {
+func insertElements(c pb.CuckooFilterClient, ctx context.Context, filterName string, elements []string) {
 	var res *pb.InsertElementsResponse
 	res, err := c.InsertElements(ctx, &pb.InsertElementsRequest{FilterName: filterName, Elements: elements})
 	if err != nil {
-		return nil, err
+		log.Fatal(err)
 	}
 	log.Println("插入失败的元素：", res.FailedElements)
-	return res.FailedElements, err
 }
 
-func resetFilter(c pb.CuckooFilterClient, ctx context.Context, filterName string) error {
+func resetFilter(c pb.CuckooFilterClient, ctx context.Context, filterName string) {
 	var res *pb.ResetFilterResponse
 	res, err := c.ResetFilter(ctx, &pb.ResetFilterRequest{FilterName: filterName})
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	log.Println("清空成功？", res.Status.Msg)
-	return nil
 }
 
-func deleteElement(c pb.CuckooFilterClient, ctx context.Context, filterName string, element string) error {
+func deleteElement(c pb.CuckooFilterClient, ctx context.Context, filterName string, element string) {
 	var res *pb.DeleteElementResponse
 	res, err := c.DeleteElement(ctx, &pb.DeleteElementRequest{FilterName: filterName, Element: element})
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	log.Println("删除成功？", res.Status.Msg)
-	return nil
 }
 
-func lookupElement(c pb.CuckooFilterClient, ctx context.Context, filterName string, element string) error {
+func lookupElement(c pb.CuckooFilterClient, ctx context.Context, filterName string, element string) {
 	var res *pb.LookupElementResponse
 	res, err := c.LookupElement(ctx, &pb.LookupElementRequest{FilterName: filterName, Element: element})
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	log.Println("查到了吗？", res.Status.Msg)
-	return nil
 }
 
-func countElements(c pb.CuckooFilterClient, ctx context.Context, filterName string) error {
+func countElements(c pb.CuckooFilterClient, ctx context.Context, filterName string) {
 	var res *pb.CountElementsResponse
 	res, err := c.CountElements(ctx, &pb.CountElementsRequest{FilterName: filterName})
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	log.Println("当前元素个数:", res.Len)
-	return err
 }
 
 func createFilter(c pb.CuckooFilterClient, ctx context.Context, filterName string, capacity uint64) {
@@ -188,12 +181,11 @@ func createFilter(c pb.CuckooFilterClient, ctx context.Context, filterName strin
 	log.Println("创建成功？", res.Status.Msg)
 }
 
-func insertElement(c pb.CuckooFilterClient, ctx context.Context, filterName string, element string) error {
+func insertElement(c pb.CuckooFilterClient, ctx context.Context, filterName string, element string) {
 	var res *pb.InsertElementResponse
 	res, err := c.InsertElement(ctx, &pb.InsertElementRequest{FilterName: filterName, Element: element})
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	log.Println("插入成功？", res.Status.Msg, element)
-	return nil
 }

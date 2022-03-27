@@ -18,6 +18,14 @@ go test -v github.com/guobinqiu/cuckoofilter/server
 go test -bench=. github.com/guobinqiu/cuckoofilter/server -benchmem
 ```
 
+### Rebuild
+
+```
+protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative cuckoofilter/cuckoofilter.proto
+```
+
+[Install protoc](https://grpc.io/docs/protoc-installation/#install-using-a-package-manager)
+
 ### API
 
 ```
@@ -60,3 +68,7 @@ rpc LookupElementsStream (stream LookupElementsStreamRequest) returns (stream Lo
 - [go](./cuckoofilter_client/main.go)
 
 - [java](https://github.com/guobinqiu/cuckoofilter-java-client)
+
+### Notes
+
+If the filter judges that the element is in the set, the element may not be in the set; but when it judges that the element is not in the set, it must not be in the set, and the application scenario should allow the existence of false positive.
