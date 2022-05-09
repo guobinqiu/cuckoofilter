@@ -65,7 +65,7 @@ rpc LookupElementsStream (stream LookupElementsStreamRequest) returns (stream Lo
 
 ### Client Examples
 
-- [go](./cuckoofilter_client/main.go)
+- [go](https://github.com/guobinqiu/cuckoofilter-go-client)
 
 - [java](https://github.com/guobinqiu/cuckoofilter-java-client)
 
