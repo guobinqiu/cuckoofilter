@@ -90,7 +90,7 @@ func (s *cuckooFilterServer) InsertElements(ctx context.Context, req *pb.InsertE
 		}
 	}
 	if len(failedElements) > 0 {
-		return &pb.InsertElementsResponse{Status: StatusNoFilterFound, FailedElements: failedElements}, nil
+		return &pb.InsertElementsResponse{Status: StatusInsertionFailed, FailedElements: failedElements}, nil
 	}
 	return &pb.InsertElementsResponse{Status: StatusOK}, nil
 }
