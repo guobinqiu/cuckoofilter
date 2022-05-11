@@ -11,7 +11,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 )
 
 var (
@@ -25,48 +24,9 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	//settings
-	dumpPath := "dump"
-	dumpInterval := 15 * time.Minute
-
 	s := grpc.NewServer()
 	srv := server.NewServer()
-	srv.Load(dumpPath)
 	pb.RegisterCuckooFilterServer(s, srv)
-
-	quit := make(chan struct{})
-	quitTicker := make(chan struct{})
-
-	go func() {
-		ticker := time.NewTicker(dumpInterval)
-		isRunning := false
-		for {
-			select {
-			case <-ticker.C:
-				//log.Println("isRunning", isRunning)
-				if !isRunning {
-					go func() {
-						log.Println("dumping...")
-						isRunning = true
-						if err := srv.Dump(dumpPath); err != nil {
-							log.Printf("failed to dump: %v", err)
-						}
-						isRunning = false
-						log.Println("dumped.")
-					}()
-				}
-			case <-quitTicker:
-				ticker.Stop()
-				for {
-					time.Sleep(100 * time.Millisecond)
-					if !isRunning {
-						quit <- struct{}{}
-						return
-					}
-				}
-			}
-		}
-	}()
 
 	go func() {
 		log.Printf("server listening at %v", lis.Addr())
@@ -79,6 +39,4 @@ func main() {
 	signal.Notify(interrupt, syscall.SIGINT, syscall.SIGTERM)
 	<-interrupt
 	s.Stop()
-	quitTicker <- struct{}{}
-	<-quit
 }
