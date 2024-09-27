@@ -75,6 +75,5 @@ If the filter judges that the element is in the set, the element may not be in t
 
 1. 和布隆过滤器一样, 空间压缩率高, 但存在误判. `它说存在实际可能不存在, 它说不存在那就真的不存在`.
 2. 对与redis的布隆过滤器, get(key)如果不存在就直接返回了, 不会再去内存中做查找, 提高了效率.
-3. 对于业务系统, 可以拿它来做去重, 它说不存在我们再把业务逻辑往下走.
+3. 出了提高查询效率, 业务系统还可以拿它来做去重
 <img width="286" alt="image" src="https://github.com/user-attachments/assets/d5c4c141-5902-4b6e-a152-5897cc04bc25">
-
